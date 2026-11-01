@@ -57,7 +57,7 @@ CLI 用法、搜索策略与发帖规则见 [CC98](../../references/cc98.md)。�
 | **favorite** | PUT/DELETE | `/me/favorite/{tid}?groupid=0` | 收藏/取消 |
 | **reply** | POST | `/topic/{tid}/post`，body `{content, contentType:0|1, title:"", isAnonymous, notifyAllReplier, clientType:1, parentId?}` | 返回新 postId（纯文本）。引用时 `parentId` 指向被引用楼 |
 | **post** | POST | `/board/{bid}/topic`，body `{title, content, contentType, type:0, tag1?, tag2?, notifyPoster, isAnonymous, clientType:1}` | 返回新 topicId。有的版面标签必选，先 `GET /board/{bid}/tag-v2` |
-| **edit** | PUT | `/post/{pid}`，body `{content, title, contentType}` | 只能改自己的楼；`GET /post/{pid}/original` 取原文（别人的楼返回 403 `cannot_edit_post`） |
+| **edit** | PUT | `/post/{pid}`，body `{content, title, contentType}`，主题楼另带原来的 `tag1`、`tag2`（取自 `GET /topic/{id}`；必须选标签的版面不带会回 400 `tag_id_error`，2026-11-01 实测） | 只能改自己的楼；`GET /post/{pid}/original` 取原文（别人的楼返回 403 `cannot_edit_post`） |
 | **message** | POST | `/message`，body `{receiverId, content}` | 发私信。200 即成功，官方前端不读响应体（发后 0.2 秒重取会话）；403 是发送太快、被全站禁言或服务器维护；不存在的用户在 `/user/name/{name}` 就返回 400 `user_not_exists`。发出后不能撤回 |
 | **upload** | POST | `/file`，multipart：字段 `contentType=multipart/form-data`，每个文件一个 `files` | 返回链接数组，顺序与文件一致。默认由服务端压缩图片，`?compressImage=false` 为无损（未使用）。官方前端对图片不限大小，非图片限 10 MB。**只做了离线模拟，真实上传未验证** |
 | ~~delete~~ | DELETE | `/post/{pid}` | **普通用户不能删**（403 `cannot_operate_board`，是版主接口）。发出去只能编辑 |

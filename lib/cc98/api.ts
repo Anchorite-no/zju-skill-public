@@ -670,7 +670,13 @@ export class Cc98Api {
     this.gate(`cc98 floor edit ${postId}`, o);
     if (!content.trim()) throw new ConfigError("内容为空");
     const original = await this.originalPost(postId);
-    const body = { content, title: o.title ?? original.title ?? "", contentType: o.contentType ?? (original.contentType === 0 ? 0 : 1) };
+    const body: Record<string, unknown> = { content, title: o.title ?? original.title ?? "", contentType: o.contentType ?? (original.contentType === 0 ? 0 : 1) };
+    // 主题楼要带上原来的标签：必须选标签的版面不带会被拒（tag_id_error），标签也就保持不变。
+    if (original.floor === 1) {
+      const topic = await this.topic(original.topicId);
+      if (topic.tag1) body["tag1"] = topic.tag1;
+      if (topic.tag2) body["tag2"] = topic.tag2;
+    }
     return this.write("cc98.edit", { postId, ...body }, o, async () => {
       await this.request<unknown>("PUT", `post/${postId}`, { body, expectJson: false });
       return { ok: true as const };
