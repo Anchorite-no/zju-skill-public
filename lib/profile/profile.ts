@@ -24,6 +24,8 @@ export const PROFILE_KEYS = [
   "pta_password",
   "chaoxing_username",
   "chaoxing_password",
+  "mail_username",
+  "mail_password",
   "transport",
   "grade",
   "major_code",
@@ -39,7 +41,7 @@ export const PROFILE_KEYS = [
 export type ProfileKey = (typeof PROFILE_KEYS)[number];
 export type ProfileRaw = Partial<Record<ProfileKey, string>>;
 
-const SECRET_KEYS: ReadonlySet<string> = new Set(["zju_password", "webvpn_password", "cc98_password", "pta_password", "chaoxing_password", "lab_password", "tyys_card_password", "tyys_buddy_password"]);
+const SECRET_KEYS: ReadonlySet<string> = new Set(["zju_password", "webvpn_password", "cc98_password", "pta_password", "chaoxing_password", "mail_password", "lab_password", "tyys_card_password", "tyys_buddy_password"]);
 
 export function profilePath(): string {
   return process.env["ZJU_PROFILE"] ? path.resolve(process.env["ZJU_PROFILE"]) : path.join(paths.root, "profile.env");
@@ -63,7 +65,7 @@ export function readProfileAll(): Record<string, string> {
   const out: Record<string, string> = {};
   const clean = (v: string) => v.replace(/[\r\n]+$/g, "");
   for (const [k, v] of Object.entries(fileVars)) if (v) out[k.toLowerCase()] = clean(v);
-  for (const [k, v] of Object.entries(loadEnv())) if (v && /^(zju|webvpn|cc98|pta|chaoxing|tyys)_/i.test(k)) out[k.toLowerCase()] = clean(v);
+  for (const [k, v] of Object.entries(loadEnv())) if (v && /^(zju|webvpn|cc98|pta|chaoxing|mail|tyys)_/i.test(k)) out[k.toLowerCase()] = clean(v);
   return out;
 }
 
@@ -198,6 +200,13 @@ export function chaoxingCredentials(): { username: string; password: string } {
   const p = readProfile();
   if (!p.chaoxing_username || !p.chaoxing_password) throw new NeedsUser("缺少超星学习通账号", `填写 ${profilePath()} 里的 chaoxing_username / chaoxing_password`);
   return { username: p.chaoxing_username, password: p.chaoxing_password };
+}
+
+/** 浙大邮箱：完整 @zju.edu.cn 地址和网页版生成的客户端专用密码，收信和发信共用 */
+export function mailCredentials(): { address: string; password: string } {
+  const p = readProfile();
+  if (!p.mail_username || !p.mail_password) throw new NeedsUser("缺少浙大邮箱账号", `填写 ${profilePath()} 里的 mail_username（完整 @zju.edu.cn 地址）/ mail_password（网页版生成的 16 位客户端专用密码）`);
+  return { address: p.mail_username.trim(), password: p.mail_password };
 }
 
 export function setTransport(t: Transport): void {

@@ -16,11 +16,16 @@
   },
   "dependencies": {
     "decimal.js": "10.6.0",
+    "imapflow": "2.5.2",
+    "mailparser": "3.14.1",
+    "nodemailer": "10.3.1",
     "parse5": "8.0.1",
     "pngjs": "7.0.0"
   },
   "devDependencies": {
+    "@types/mailparser": "3.4.6",
     "@types/node": "^24.0.0",
+    "@types/nodemailer": "8.0.2",
     "@types/pngjs": "6.0.5",
     "typescript": "^5.9.0"
   },

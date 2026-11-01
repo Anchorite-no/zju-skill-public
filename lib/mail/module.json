@@ -1,0 +1,26 @@
+{
+  "name": "mail",
+  "title": "浙大邮箱",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "imap.zju.edu.cn",
+    "smtp.zju.edu.cn"
+  ],
+  "auth": "own",
+  "network": "public",
+  "writes": true,
+  "provides": [
+    "mail check",
+    "mail folders",
+    "mail message list",
+    "mail message view",
+    "mail message download",
+    "mail message send",
+    "mail message reply"
+  ],
+  "requires": [
+    "core",
+    "profile"
+  ]
+}

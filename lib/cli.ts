@@ -17,6 +17,7 @@ import { ptaCommands } from "./pta/cli.ts";
 import { chaoxingCommands } from "./chaoxing/cli.ts";
 import { cnkiCommands } from "./cnki/cli.ts";
 import { docCommands } from "./doc/cli.ts";
+import { mailCommands } from "./mail/cli.ts";
 export const modules: Record<string, {
     description: string;
     commands: Record<string, Command>;
@@ -38,6 +39,7 @@ export const modules: Record<string, {
     cc98: { description: "论坛查询、个人中心与互动发布", commands: cc98Commands },
     chalaoshi: { description: "教师评价与课程绩点", commands: chalaoshiCommands },
     cnki: { description: "中国知网文献检索、筛选与全文 PDF 下载", commands: cnkiCommands },
+    mail: { description: "浙大邮箱：邮件列表、正文、附件下载、发信和回复", commands: mailCommands },
     doc: { description: "PDF、Word、PPT、Excel 等文件或链接转文字；图片与 Word 转 PDF、合并、取页、找页、取图、渲染", commands: docCommands },
     net: { description: "旧网络入口，请使用 webvpn", hidden: true, commands: {
             check: retired("webvpn check --host HOSTS"),

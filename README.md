@@ -14,6 +14,7 @@ AI 入口为 [SKILL.md](SKILL.md)，全部命令见 [命令总表](references/co
 | 通知、素质拓展、电子书 | 校级和学院通知、二三四课堂记点与活动、报名收藏、电子书平台入口 |
 | PTA、超星、智云 | PTA 作业与作答；超星课件和视频；智云资源、字幕、课堂实时文字、本地转写 |
 | CC98、查老师、知网 | 论坛查询与用户授权互动、教师评价、中文文献检索和下载 |
+| 浙大邮箱 | 邮件列表、正文和附件下载，查信读信不改未读状态；预览后确认的发信与回复 |
 | 文档 | PDF/Office 转文字、图片和 Word 转 PDF、合并、取页、找页、取图与渲染 |
 
 ## 安装
@@ -27,7 +28,7 @@ npm ci
 node scripts/zju.ts profile init
 ```
 
-编辑生成的 profile.env，仅填需要使用的账号。统一认证、WebVPN、CC98、PTA、超星和实验平台的凭据各自独立；模板见 [profile.env.example](profile.env.example)。不要提交账号、会话或下载材料。
+编辑生成的 profile.env，仅填需要使用的账号。统一认证、WebVPN、CC98、PTA、超星、浙大邮箱和实验平台的凭据各自独立；模板见 [profile.env.example](profile.env.example)。不要提交账号、会话或下载材料。
 
 ```sh
 node scripts/zju.ts --help

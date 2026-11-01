@@ -1,6 +1,6 @@
 # 当前命令总表
 
-生成日期：2026-11-01。共 172 条公开命令路径、17 个模块。
+生成日期：2026-11-01。共 179 条公开命令路径、18 个模块。
 
 入口为 `node scripts/zju.ts <module> <command> [参数]`。默认帮助逐级展示；`--help --all` 展开当前范围全部公开命令。参数类型与帮助来自实际注册定义，本生成器不执行登录或业务。
 
@@ -24,6 +24,7 @@
 | [cc98](#cc98) | 32 | 论坛查询、个人中心与互动发布 |
 | [chalaoshi](#chalaoshi) | 3 | 教师评价与课程绩点 |
 | [cnki](#cnki) | 5 | 中国知网文献检索、筛选与全文 PDF 下载 |
+| [mail](#mail) | 7 | 浙大邮箱：邮件列表、正文、附件下载、发信和回复 |
 | [doc](#doc) | 8 | PDF、Word、PPT、Excel 等文件或链接转文字；图片与 Word 转 PDF、合并、取页、找页、取图、渲染 |
 
 ## profile
@@ -1401,6 +1402,66 @@ zju cnki session logout  清除本地保存的知网登录
 ```
 
 无参数。
+
+## mail
+
+浙大邮箱：邮件列表、正文、附件下载、发信和回复
+
+### mail check
+
+```text
+zju mail check  检查邮箱账号：收信（IMAP）和发信（SMTP）服务器能不能登录；不读邮件、不发信
+```
+
+无参数。
+
+### mail folders
+
+```text
+zju mail folders  邮件目录：收件箱、已发送、草稿、垃圾邮件和自己建的文件夹
+```
+
+无参数。
+
+### mail message list
+
+```text
+zju mail message list [--folder VALUE] [--keyword VALUE] [--from VALUE] [--since VALUE] [--until VALUE] [--unread] [--limit N] 邮件列表，最新的在前：主题、发件人、时间、是否未读、几个附件；只读，不改未读状态
+```
+
+`--folder`：文本/路径；`--keyword`：文本/路径；`--from`：文本/路径；`--since`：文本/路径；`--until`：文本/路径；`--unread`：开关；`--limit`：整数，默认 20，最小 1，最大 100。
+
+### mail message view
+
+```text
+zju mail message view --id VALUE [--folder VALUE] 一封邮件的完整正文、发件人、收件人、抄送和附件清单；只读，不会标成已读
+```
+
+`--id`：文本/路径，必填；`--folder`：文本/路径。
+
+### mail message download
+
+```text
+zju mail message download --id VALUE [--folder VALUE] [--name VALUE] [--out-dir VALUE] 下载一封邮件的附件，默认全部，返回本地路径；默认存到 data/output/mail/，下载过的直接复用
+```
+
+`--id`：文本/路径，必填；`--folder`：文本/路径；`--name`：文本/路径；`--out-dir`：文本/路径。
+
+### mail message send
+
+```text
+zju mail message send --to VALUE [--cc VALUE] --subject VALUE [--content VALUE] [--content-file VALUE] [--file VALUE] [--dry-run] [--force] [--confirm] 发一封新邮件：先 --dry-run 预览给用户看，用户同意后加 --confirm 发；发出后不能撤回
+```
+
+`--to`：文本/路径，必填；`--cc`：文本/路径；`--subject`：文本/路径，必填；`--content`：文本/路径；`--content-file`：文本/路径；`--file`：文本/路径；`--dry-run`：开关；`--force`：开关；`--confirm`：开关。
+
+### mail message reply
+
+```text
+zju mail message reply --id VALUE [--folder VALUE] [--all] [--content VALUE] [--content-file VALUE] [--file VALUE] [--dry-run] [--force] [--confirm] 回复一封邮件：收件人取原信的回复地址或发件人，主题加 Re:，原文引用附在正文后面；加 --all 是回复全部。同样先 --dry-run
+```
+
+`--id`：文本/路径，必填；`--folder`：文本/路径；`--all`：开关；`--content`：文本/路径；`--content-file`：文本/路径；`--file`：文本/路径；`--dry-run`：开关；`--force`：开关；`--confirm`：开关。
 
 ## doc
 
