@@ -1,0 +1,24 @@
+# 凭据、会话、知识库、日志：绝不进 git
+data/
+!data/.gitkeep
+.env
+.env.*
+profile.env
+profile.env.*
+!profile.env.example
+
+# 依赖与产物
+node_modules/
+dist/
+*.log
+*.tmp
+__pycache__/
+*.py[cod]
+scripts/tmp/
+
+# 系统
+Thumbs.db
+.DS_Store
+
+# 逆向留档（APK、脱壳 DEX、反编译源码；本地防重复工作，不进 git）
+dev/tyys-apk/
