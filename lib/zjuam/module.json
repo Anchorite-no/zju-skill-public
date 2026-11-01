@@ -1,0 +1,21 @@
+{
+  "name": "zjuam",
+  "title": "统一身份认证",
+  "tier": 0,
+  "runtime": "node",
+  "hosts": [
+    "zjuam.zju.edu.cn"
+  ],
+  "auth": "none",
+  "network": "public",
+  "writes": false,
+  "provides": [
+    "zjuam session login",
+    "zjuam session status",
+    "zjuam session logout"
+  ],
+  "requires": [
+    "core",
+    "net"
+  ]
+}

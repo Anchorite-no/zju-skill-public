@@ -1,0 +1,21 @@
+{
+  "name": "chalaoshi",
+  "title": "查老师（chalaoshi.de）",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "chalaoshi.de",
+    "api.chalaoshi.de"
+  ],
+  "auth": "none",
+  "network": "public",
+  "writes": false,
+  "provides": [
+    "chalaoshi search",
+    "chalaoshi teacher",
+    "chalaoshi course"
+  ],
+  "requires": [
+    "core"
+  ]
+}

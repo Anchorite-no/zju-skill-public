@@ -1,0 +1,39 @@
+{
+  "name": "xuezai",
+  "title": "学在浙大（TronClass）",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "courses.zju.edu.cn"
+  ],
+  "auth": "cas",
+  "network": "public",
+  "writes": true,
+  "provides": [
+    "xuezai todos",
+    "xuezai course list",
+    "xuezai course view",
+    "xuezai material list",
+    "xuezai material download",
+    "xuezai homework list",
+    "xuezai homework view",
+    "xuezai homework download",
+    "xuezai homework attachments",
+    "xuezai homework submit",
+    "xuezai homework retract",
+    "xuezai rollcall",
+    "xuezai rollcall number",
+    "xuezai rollcall all",
+    "xuezai rollcall status",
+    "xuezai rollcall history",
+    "xuezai session login",
+    "xuezai session status",
+    "xuezai session logout"
+  ],
+  "requires": [
+    "core",
+    "profile",
+    "webvpn",
+    "zjuam"
+  ]
+}

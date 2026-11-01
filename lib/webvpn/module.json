@@ -1,0 +1,26 @@
+{
+  "name": "webvpn",
+  "title": "WebVPN（webvpn.zju.edu.cn）与传输层",
+  "tier": 0,
+  "runtime": "node",
+  "hosts": [
+    "webvpn.zju.edu.cn"
+  ],
+  "auth": "own",
+  "network": "public",
+  "writes": false,
+  "provides": [
+    "webvpn probe",
+    "webvpn check",
+    "webvpn url encode",
+    "webvpn url decode",
+    "webvpn session login",
+    "webvpn session status",
+    "webvpn session logout",
+    "webvpn session import-cookie"
+  ],
+  "requires": [
+    "core",
+    "profile"
+  ]
+}

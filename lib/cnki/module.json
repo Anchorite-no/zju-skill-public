@@ -1,0 +1,25 @@
+{
+  "name": "cnki",
+  "title": "中国知网",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "cnki.net"
+  ],
+  "auth": "none",
+  "network": "campus",
+  "writes": false,
+  "sessionProbe": "https://login.cnki.net/TopLogin/api/loginapi/IpLoginFlush",
+  "provides": [
+    "cnki search",
+    "cnki download",
+    "cnki session login",
+    "cnki session status",
+    "cnki session logout"
+  ],
+  "requires": [
+    "core",
+    "profile",
+    "webvpn"
+  ]
+}

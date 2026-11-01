@@ -1,0 +1,21 @@
+{
+  "name": "ebook",
+  "title": "学校订购的电子图书（图书馆电子书刊导航与超星电子书）",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "gk4pb6yy8y.search.serialssolutions.com",
+    "sslibrary.com"
+  ],
+  "auth": "none",
+  "network": "campus",
+  "writes": false,
+  "provides": [
+    "ebook search"
+  ],
+  "requires": [
+    "core",
+    "profile",
+    "webvpn"
+  ]
+}

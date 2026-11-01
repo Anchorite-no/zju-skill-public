@@ -1,0 +1,52 @@
+{
+  "name": "tyys",
+  "title": "浙大体艺考勤查询与场馆预约",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "tyys.zju.edu.cn",
+    "www.tyys.zju.edu.cn"
+  ],
+  "auth": "cas",
+  "network": "public",
+  "writes": true,
+  "provides": [
+    "tyys rollcall status",
+    "tyys rollcall history",
+    "tyys session login",
+    "tyys session status",
+    "tyys session logout",
+    "tyys venue list",
+    "tyys venue book",
+    "tyys venue order list",
+    "tyys venue order cancel",
+    "tyys venue notice",
+    "tyys venue setup",
+    "tyys venue check"
+  ],
+  "requires": [
+    "core",
+    "profile",
+    "webvpn",
+    "zjuam"
+  ],
+  "localDependencies": {
+    "captcha": {
+      "runtime": "python",
+      "packages": [
+        "ddddocr==1.6.1",
+        "paddleocr==3.4.0",
+        "paddlepaddle==3.3.1"
+      ],
+      "location": "data/tools/tyys/.venv",
+      "setup": "tyys venue setup",
+      "purpose": "预约期间本地点字验证码识别；查询不需要",
+      "systemPackages": {
+        "ubuntu": [
+          "python3-venv",
+          "libgl1"
+        ]
+      }
+    }
+  }
+}

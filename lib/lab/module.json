@@ -1,0 +1,29 @@
+{
+  "name": "lab",
+  "title": "实验课选课平台（浙江大学实验选课系统，10.203.16.55）",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "10.203.16.55"
+  ],
+  "auth": "own",
+  "network": "campus",
+  "writes": true,
+  "provides": [
+    "lab timetable",
+    "lab grades",
+    "lab courses",
+    "lab labs",
+    "lab selected",
+    "lab select",
+    "lab notices",
+    "lab session login",
+    "lab session status",
+    "lab session logout"
+  ],
+  "requires": [
+    "core",
+    "profile",
+    "webvpn"
+  ]
+}

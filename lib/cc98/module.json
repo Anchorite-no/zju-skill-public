@@ -1,0 +1,51 @@
+{
+  "name": "cc98",
+  "title": "CC98 论坛（api.cc98.org / openid.cc98.org）",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "cc98.org"
+  ],
+  "auth": "own",
+  "network": "campus",
+  "writes": true,
+  "provides": [
+    "cc98 hot",
+    "cc98 search",
+    "cc98 user",
+    "cc98 board list",
+    "cc98 board topics",
+    "cc98 board tags",
+    "cc98 board post",
+    "cc98 topic view",
+    "cc98 topic reply",
+    "cc98 topic favorite",
+    "cc98 topic download",
+    "cc98 floor like",
+    "cc98 floor rate",
+    "cc98 floor rating-reasons",
+    "cc98 floor original",
+    "cc98 floor edit",
+    "cc98 private-message list",
+    "cc98 private-message view",
+    "cc98 private-message send",
+    "cc98 account overview",
+    "cc98 account topics",
+    "cc98 account posts",
+    "cc98 account history",
+    "cc98 account favorites",
+    "cc98 account following",
+    "cc98 account feed",
+    "cc98 account notifications",
+    "cc98 account signin",
+    "cc98 account signin-month",
+    "cc98 session login",
+    "cc98 session status",
+    "cc98 session logout"
+  ],
+  "requires": [
+    "core",
+    "profile",
+    "webvpn"
+  ]
+}

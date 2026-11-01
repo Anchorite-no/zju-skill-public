@@ -1,0 +1,18 @@
+{
+  "moved": [
+    {
+      "from": "www.youth.zju.edu.cn/sztz",
+      "to": "https://sztz.zju.edu.cn/dekt/",
+      "name": "素拓网（素质拓展数智平台）",
+      "checked": "2026-10-12",
+      "found": "老素拓网，团委旧网站下面的一个子目录。搬成独立的平台以后旧地址没有留跳转，返回 404；学校的旧文件里还写着它。"
+    },
+    {
+      "from": "www.qzlake.zju.edu.cn",
+      "to": "https://sztz.zju.edu.cn/dekt/",
+      "name": "素拓网（素质拓展数智平台）",
+      "checked": "2026-10-12",
+      "found": "更早的素质拓展网站域名，现在是个空页面；团委首页「二三四课堂」那一格的图上印的还是它，那一格链的是现在的平台。"
+    }
+  ]
+}

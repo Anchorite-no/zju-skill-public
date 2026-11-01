@@ -1,0 +1,25 @@
+{
+  "name": "notice",
+  "title": "校内通知公告（教务网、本科生院、学工部、综合服务网等）",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "zju.edu.cn"
+  ],
+  "auth": "cas",
+  "network": "campus",
+  "writes": false,
+  "provides": [
+    "notice list",
+    "notice view",
+    "notice new",
+    "notice sources"
+  ],
+  "requires": [
+    "core",
+    "profile",
+    "zjuam",
+    "webvpn",
+    "zdbk"
+  ]
+}

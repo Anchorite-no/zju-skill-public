@@ -1,0 +1,27 @@
+{
+  "name": "zju-skill",
+  "version": "0.1.0",
+  "private": true,
+  "description": "面向 AI agent 的浙大系统接口、可组合命令与可靠执行组件",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "bin": {
+    "zju": "scripts/zju.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "zju": "node scripts/zju.ts"
+  },
+  "dependencies": {
+    "decimal.js": "10.6.0",
+    "parse5": "8.0.1",
+    "pngjs": "7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/pngjs": "6.0.5",
+    "typescript": "^5.9.0"
+  }
+}

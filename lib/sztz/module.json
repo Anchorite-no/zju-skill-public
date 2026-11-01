@@ -1,0 +1,28 @@
+{
+  "name": "sztz",
+  "title": "大学生素质拓展数智平台（二三四课堂，sztz.zju.edu.cn）",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "sztz.zju.edu.cn"
+  ],
+  "auth": "cas",
+  "network": "campus",
+  "writes": true,
+  "provides": [
+    "sztz credits",
+    "sztz activity list",
+    "sztz activity new",
+    "sztz activity mine",
+    "sztz activity signup",
+    "sztz activity favorite",
+    "sztz projects",
+    "sztz notices"
+  ],
+  "requires": [
+    "core",
+    "profile",
+    "zjuam",
+    "webvpn"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "chaoxing",
+  "title": "超星学习通（泛雅）",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "chaoxing.com"
+  ],
+  "auth": "own",
+  "network": "public",
+  "writes": false,
+  "sessionProbe": "https://mooc1-api.chaoxing.com/mycourse/backclazzdata?view=json&rss=1",
+  "provides": [
+    "chaoxing course list",
+    "chaoxing chapter list",
+    "chaoxing material list",
+    "chaoxing material download",
+    "chaoxing video list",
+    "chaoxing video download",
+    "chaoxing session login",
+    "chaoxing session status",
+    "chaoxing session logout"
+  ],
+  "requires": [
+    "core",
+    "profile"
+  ]
+}

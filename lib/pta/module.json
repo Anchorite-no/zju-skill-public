@@ -1,0 +1,28 @@
+{
+  "name": "pta",
+  "title": "PTA 程序设计类实验辅助教学平台",
+  "hosts": [
+    "pintia.cn",
+    "passport.pintia.cn"
+  ],
+  "auth": "own",
+  "network": "public",
+  "writes": true,
+  "sessionProbe": "https://passport.pintia.cn/api/u/current",
+  "provides": [
+    "pta homework list",
+    "pta homework view",
+    "pta homework start",
+    "pta homework finish",
+    "pta problem view",
+    "pta problem save",
+    "pta problem submit",
+    "pta submission list",
+    "pta submission view",
+    "pta reconcile",
+    "pta session login",
+    "pta session status",
+    "pta session logout",
+    "pta session import-cookie"
+  ]
+}

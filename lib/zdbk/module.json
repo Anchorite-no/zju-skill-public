@@ -1,0 +1,38 @@
+{
+  "name": "zdbk",
+  "title": "本科教学管理信息服务平台（教务网，zdbk.zju.edu.cn）",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [
+    "zdbk.zju.edu.cn"
+  ],
+  "auth": "cas",
+  "network": "public",
+  "writes": true,
+  "provides": [
+    "zdbk timetable",
+    "zdbk exams",
+    "zdbk grades",
+    "zdbk student",
+    "zdbk plan view",
+    "zdbk plan list",
+    "zdbk selection context",
+    "zdbk selection courses",
+    "zdbk selection search",
+    "zdbk selection sections",
+    "zdbk selection selected",
+    "zdbk selection credits",
+    "zdbk selection select",
+    "zdbk selection reorder",
+    "zdbk selection drop",
+    "zdbk session login",
+    "zdbk session status",
+    "zdbk session logout"
+  ],
+  "requires": [
+    "core",
+    "profile",
+    "zjuam",
+    "webvpn"
+  ]
+}

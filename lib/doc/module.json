@@ -1,0 +1,38 @@
+{
+  "name": "doc",
+  "title": "文档转文字与 PDF 处理",
+  "tier": 1,
+  "runtime": "node",
+  "hosts": [],
+  "auth": "none",
+  "network": "public",
+  "writes": false,
+  "provides": [
+    "doc text",
+    "doc pdf",
+    "doc pages",
+    "doc find",
+    "doc images",
+    "doc render",
+    "doc check",
+    "doc setup"
+  ],
+  "requires": [
+    "core",
+    "webvpn",
+    "zdbk"
+  ],
+  "localDependencies": {
+    "python": {
+      "runtime": "python",
+      "packages": ["pypdf>=5,<7", "openpyxl>=3.1,<4", "xlrd>=2,<3", "olefile>=0.46,<1", "Pillow>=10,<13", "PyMuPDF>=1.24,<2"],
+      "location": "data/tools/doc/.venv",
+      "setup": "zju doc setup"
+    },
+    "libreoffice": {
+      "runtime": "soffice",
+      "purpose": "doc、rtf、odt、wps、ods 先转为 OOXML 再提取；演示文稿不经 LibreOffice",
+      "setup": "Ubuntu：sudo apt install --no-install-recommends libreoffice-writer-nogui libreoffice-calc-nogui；Windows：安装 LibreOffice"
+    }
+  }
+}
