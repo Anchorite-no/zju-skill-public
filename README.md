@@ -53,4 +53,4 @@ node scripts/zju.ts tyys venue list
 
 运行 npm run typecheck，更新命令后用 node scripts/command-docs.ts 生成命令表。开发约定见 [AGENTS.md](AGENTS.md)，职责见 [架构](dev/architecture.md)，验证范围见 [状态](dev/PLAN.md)。
 
-当前尚未选定仓库级开源许可证。部分代码带有原始许可来源说明，保留这些说明；正式开源许可需在发布前核对权属和依赖。
+项目自有代码采用 [GNU GPL v3（仅限第 3 版）](LICENSE)，SPDX 标识为 `GPL-3.0-only`。使用、修改与再分发须遵循该许可证；分发修改版时按 GPL 提供对应源码并保留许可。第三方代码、依赖和模型保留各自的许可，来源及声明见 [第三方声明](THIRD_PARTY_NOTICES.md)。
