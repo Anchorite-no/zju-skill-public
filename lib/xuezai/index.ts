@@ -3,6 +3,6 @@ export { listSemesters, currentSemesters, listCourses, findCourse, getCourse, li
 export { listMaterials, downloadMaterials } from "./materials.ts";
 export { listHomework, getHomework, mySubmissions, submitHomework, retractHomework } from "./homework.ts";
 export { listTodos, scanHomeworkTodos, getTodos } from "./todos.ts";
-export { listRollcalls, answered, signin } from "./rollcall.ts";
-export type { Rollcall, RollcallClient, SigninOptions, SigninResult } from "./rollcall.ts";
+export { listRollcalls, answered, rollcallHistory } from "./rollcall.ts";
+export type { Rollcall, RollcallClient } from "./rollcall.ts";
 export type * from "./types.ts";

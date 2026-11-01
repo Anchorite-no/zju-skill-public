@@ -167,6 +167,5 @@ for (const [old, now] of Object.entries({
   materials: "material list --course 课程名", download: "material download --course 课程名 --name 文件名",
   read: "material download --course 课程名 --name 文件名；然后直接读取返回的本地文件",
   submit: "homework submit", retract: "homework retract", submission: "homework view --course 课程名 --name 作业名",
-  "rollcall-number": "rollcall number", "rollcall-all": "rollcall all", attendance: "rollcall status", "rollcall-history": "rollcall history",
-  rollcalls: "rollcall status", "rollcall-points": "rollcall", "rollcall-answer": "rollcall", "rollcall-auto": "rollcall", "rollcall-watch": "rollcall",
+  attendance: "rollcall status", "rollcall-history": "rollcall history", rollcalls: "rollcall status",
 })) xuezaiCommands[old] = retired(`xuezai ${now}`);

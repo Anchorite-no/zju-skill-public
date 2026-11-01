@@ -159,9 +159,8 @@ export async function startLive(course?: string, internal: { id?: string; until?
   } finally { if (!handedOff) releaseLease(id); }
 }
 
-export async function stopLive(expectedTaskId?: string) {
+export async function stopLive() {
   const task = readJson<LiveTask>(taskFile());
-  if (expectedTaskId && task?.id !== expectedTaskId) return { status: "not-owned", message: "当前字幕任务不属于本次签到，未停止。" };
   if (!task || !active(task)) return liveStatus();
   if (!processAlive(task.pid)) {
     writeJson(taskFile(), { ...task, status: "failed", error: "采集进程已退出", updatedAt: Date.now() }); releaseLease(task.id); return liveStatus();

@@ -66,7 +66,7 @@ export function command(description: string, options: Record<string, Option>, ru
             return run(validateOptions(options, f));
         } };
 }
-/** 命令分组。给了 self 时分组本身也能执行：不带子命令就运行 self（如 rollcall 本身是签到，rollcall history 查记录）。 */
+/** 命令分组。给了 self 时分组本身也能执行：不带子命令就运行 self。 */
 export function group(description: string, children: Record<string, Command>, self?: Command): Command {
     if (self)
         return { ...self, summary: description, children };

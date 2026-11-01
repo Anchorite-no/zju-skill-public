@@ -1,6 +1,6 @@
 ---
 name: zju
-description: 浙江大学校园任务工具，查询课表、成绩、作业、课件和课程信息，学校各部门和本人学院的通知公告（教务网、学工部、研工部、团委、综合服务网、各学院官网等）和新通知，二课、三课的活动与本人记点（素质拓展平台，文件里常叫素拓网），学校订购的电子图书在哪个平台有全文（图书馆电子图书导航、超星电子书），体艺场馆空场、预约须知与放号时间，CC98 论坛帖子与帖内图片视频下载（file.cc98.org 等校网链接经 WebVPN 获取），读取 PDF、Word、PPT、Excel 等文档的文字（本地文件或链接），PDF 找页、切页、取出其中的图片或把某页渲染成图，照片和 Word 转 PDF，超星学习通（泛雅）课程的课件与视频下载，在中国知网检索中文论文（期刊、学位论文、会议）并用学校 IP 下载全文 PDF，浙大邮箱（@zju.edu.cn）的邮件列表、正文和附件，执行已授权的签到、场馆预约与取消、选课、作业提交、二课活动报名和发邮件、回复邮件。zju.edu.cn、cc98.org 的链接直接用 curl 或网页提取会超时或要求登录，一律先用本技能。
+description: 浙江大学校园任务工具，查询课表、成绩、作业、课件和课程信息，学校各部门和本人学院的通知公告（教务网、学工部、研工部、团委、综合服务网、各学院官网等）和新通知，二课、三课的活动与本人记点（素质拓展平台，文件里常叫素拓网），学校订购的电子图书在哪个平台有全文（图书馆电子图书导航、超星电子书），体艺场馆空场、预约须知与放号时间，CC98 论坛帖子与帖内图片视频下载（file.cc98.org 等校网链接经 WebVPN 获取），读取 PDF、Word、PPT、Excel 等文档的文字（本地文件或链接），PDF 找页、切页、取出其中的图片或把某页渲染成图，照片和 Word 转 PDF，超星学习通（泛雅）课程的课件与视频下载，在中国知网检索中文论文（期刊、学位论文、会议）并用学校 IP 下载全文 PDF，浙大邮箱（@zju.edu.cn）的邮件列表、正文和附件，执行已授权的场馆预约与取消、选课、作业提交、二课活动报名和发邮件、回复邮件。zju.edu.cn、cc98.org 的链接直接用 curl 或网页提取会超时或要求登录，一律先用本技能。
 ---
 
 # zju
@@ -85,17 +85,9 @@ description: 浙江大学校园任务工具，查询课表、成绩、作业、�
 
 ## 签到
 
-“帮我签到”“学在浙大签到”默认用学在 GPS/雷达；体育课签到由用户在官方 App 完成；CC98 签到必须明确提到 CC98。
+本版本不提供签到：学在浙大和体育课签到都由用户在官方 App 完成，不写脚本代签。CC98 签到必须明确提到 CC98。
 
-`ZJU_ALLOW_WRITE=1 node <SKILL>/scripts/zju.ts xuezai rollcall --confirm`
-
-明确说“数字签到”用 `xuezai rollcall number --confirm`，明确说“签到全开”用 `xuezai rollcall all --confirm`，同样设置 `ZJU_ALLOW_WRITE=1`。数字入口内部准备字幕、取码与回查，无需另调 live start；课前开启并给出覆盖课堂的时长才能保留此前报码。全开组合 GPS 和数字两路，任一路确认签上后两路一起停止。普通签到只走 GPS，不开启数字或智云。
-
-体艺只提供 `tyys rollcall status` 与 `tyys rollcall history`。status 返回当前 GPS 查询结果和已有到勤方式；无法确认时按 message 回答，不把查询成功说成已签到，也不另写提交脚本。
-
-以前的签到记录、缺勤次数：学在课程 `xuezai rollcall history`，体育课 `tyys rollcall history`，都可加 `--course 课程名`；没说平台时两个都查，按 message 回答。
-
-签到使用终端 background=true、notify=true。启动时回复正在监测；完成通知后转述 message。status 为 signed/already-signed 才是签到完成，其余按 message 报告，不能把启动或空结果说成签到成功。
+现在有没有点名、本人是否已签：学在 `xuezai rollcall status`，体育课 `tyys rollcall status`，只查看。以前的签到记录、缺勤次数：学在课程 `xuezai rollcall history`，体育课 `tyys rollcall history`，都可加 `--course 课程名`；没说平台时两个都查，按 message 回答。无法确认时按 message 回答，不把查询成功说成已签到，也不另写提交脚本。
 
 ## 操作边界与结果
 

@@ -4,7 +4,6 @@
 
 ## 移植来源
 
-- 学在雷达签到及球面距离拟合代码来自 ZJU-Course-Autosign/src/core.js，原项目声明 GPL-3.0-only。lib/xuezai/rollcall.ts 中的来源说明原样保留。
 - lib/core/http.ts 的 HTTP/Cookie 基础实现、lib/webvpn/client.ts 的 WebVPN 适配、scripts/doc/pdf_tool.py 等保留了此前项目的迁移或改编说明。相关原始版权和来源注释不得移除。
 - 平台协议、公开客户端常量和服务端内容不因收录于本项目而由本项目重新授权。用户资料、课程文件、论文及论坛内容也不属于本项目的软件许可范围。
 

@@ -8,7 +8,7 @@ xuezai
 ├─ course    list · view                    我的课程；一门课的章节与活动
 ├─ material  list · download                课件等文件
 ├─ homework  list · view · download · attachments · submit · retract 作业
-├─ rollcall  （本身即 GPS 签到）· number · all · status · history
+├─ rollcall  status · history                点名：当前点名、历史记录（只读）
 └─ session   login · status · logout        排障用
 ```
 
@@ -30,34 +30,14 @@ xuezai
 
 下载结果总在 `files` 列表里（一个文件也是），个别失败的列在 `failed`。下载到的文件直接用返回的本地路径读取或发送。
 
-签到的日常调用：
-
-`ZJU_ALLOW_WRITE=1 node scripts/zju.ts xuezai rollcall --confirm`
-
-单次签到不传 duration，挂 10 分钟（600 秒），每 4 秒检查一次，确认成功立即停止。用户说了时长才加 `--duration 秒数`，不设上限；指定间隔才加 `--interval 秒数`。只查有没有点名用 `xuezai rollcall status`，不作为签到前置步骤。
-
-| 用户说法 | 命令 |
-|---|---|
-| 帮我签到 / GPS 签到 / 雷达签到 | `xuezai rollcall --confirm`，只运行 GPS/雷达 |
-| 开启数字签到 | `xuezai rollcall number --confirm`，自动准备字幕、取码、提交和回查 |
-| 签到全开 | `xuezai rollcall all --confirm`，组合两路，任一路成功就全部停止 |
-
-三者均需 `ZJU_ALLOW_WRITE=1`，时长、间隔的单位和默认值相同。数字签到应在课前开启，用户指定的 duration 要覆盖所需课堂；启动晚了不能补回先前文字。默认 GPS 不连接智云。数字和全开内部复用智云远程配置，执行机需要在线；失败不会冒充签到成功。仅停止本次签到创建的采集，用户原来独立开启的课堂采集继续运行。
+点名只能查看：`xuezai rollcall status` 看现在有没有点名、本人是否已签。本版本不提交签到，学在签到请在官方 App 里完成。
 
 ## 点名记录
 
 `xuezai rollcall history [--course 课程名]` 列出以往每次点名：时间（北京时间）、方式（雷达/数字/二维码）、状态（已签到、缺勤、未签（点名未结束）；其他平台状态原样给出）。省略 course 查全部学期的课程；course 按名称模糊匹配，同名课程一并返回。课程按最近一次点名排序，每门课的记录最近的在前，附 total/signed/notSigned。message 已汇总总次数和每次未签到的课程与时间，直接转述。部分课程读取失败返回 BAD_RESPONSE，`error.detail.result` 保留已取得的记录与逐课程错误。
 
-## 执行结果
-
-GPS 与数字分别只检查自己类型的点名，其他类型的已签记录不当作本次成功。全开复用两套执行器，任一路 confirmed success 后取消另一条；一条不可用时另一条仍继续。
-
-数字只从同课程时间窗口的定稿文字提取带签到语境的完整四位码，不补全缺位或枚举。明确错码才换下一个有证据的候选；其他结果先回查，仍未签上就下一轮重试同一码。回查确认 signed/already-signed 才是成功；缺码时附 windowText 与原因。到期、取消、字幕无法读取或平台拒绝均明确报告。
-
-结果以 status/message 为准；未完成返回非零，error.detail.result 保留业务结果。每次提交前写 journal，日志失败不提交。cleanupWarning 表示本次字幕采集的停止尚未确认，后台仍受原任务截止时间限制。
-
 ## 边界与错误
 
-当前边界：支持个人文件/文字作业提交，以及雷达/数字点名应答；小组作业提交、在线考试答题、PTA 和学习进度写入未在此模块实现。todos 自动合并平台待办（含考试/测验）与各课作业补查，按课程作业的提交状态纠正残留待办；默认排除已交作业，`--done` 时保留并标为已完成。
+当前边界：支持个人文件/文字作业提交；点名只读，不提交签到；小组作业提交、在线考试答题、PTA 和学习进度写入未在此模块实现。todos 自动合并平台待办（含考试/测验）与各课作业补查，按课程作业的提交状态纠正残留待办；默认排除已交作业，`--done` 时保留并标为已完成。
 
 待办遇到部分读取失败时返回 BAD_RESPONSE，error.detail.result 保留已取得的待办与逐课程错误。
