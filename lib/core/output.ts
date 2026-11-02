@@ -4,6 +4,8 @@
 import { ZjuError, exitCodeFor } from "./errors.ts";
 import { debugEnabled } from "./env.ts";
 import { currentAddresses } from "./moved.ts";
+import { redact, redactText } from "./redact.mjs";
+export { redact } from "./redact.mjs";
 
 export type Source = "live" | "cache" | "local";
 
@@ -33,13 +35,13 @@ export function envelope<T>(system: string, action: string, data: T, opts: { sou
 export function errorEnvelope(system: string, action: string, err: unknown): ErrorEnvelope {
   const base = { ok: false as const, system, action, generated_at: new Date().toISOString() };
   if (err instanceof ZjuError) {
-    const e: ErrorEnvelope["error"] = { code: err.code, message: err.message };
-    if (err.hint) e.hint = err.hint;
+    const e: ErrorEnvelope["error"] = { code: err.code, message: redactText(err.message) };
+    if (err.hint) e.hint = redactText(err.hint);
     if (Object.keys(err.detail).length) e.detail = redact(err.detail) as Record<string, unknown>;
     return { ...base, error: e };
   }
   const message = err instanceof Error ? err.message : String(err);
-  return { ...base, error: { code: "INTERNAL", message } };
+  return { ...base, error: { code: "INTERNAL", message: redactText(message) } };
 }
 
 export function printAndExit(payload: Envelope | ErrorEnvelope, err?: unknown): void {
@@ -81,25 +83,14 @@ export function fileSize(bytes: unknown): string | null {
 }
 
 export function log(msg: string): void {
-  process.stderr.write(`[zju] ${msg}\n`);
+  process.stderr.write(`[zju] ${redactText(msg)}\n`);
+}
+
+/** 下载进度的一行：已经收到的字节数和总字节数（总量还估不出来时是 0）。前缀固定，启动这条命令的程序按它认。 */
+export function progress(state: { bytes: number; total: number }): void {
+  process.stderr.write(`[zju:progress] ${JSON.stringify(state)}\n`);
 }
 
 export function debug(msg: string): void {
-  if (debugEnabled()) process.stderr.write(`[zju:debug] ${msg}\n`);
-}
-
-const SECRET_KEYS = /pass(word)?|secret|token|cookie|ticket|authorization|jsessionid|route/i;
-
-/** 递归脱敏：键名像秘密的值替换为占位符。用于日志与错误 detail。 */
-export function redact(value: unknown, depth = 0): unknown {
-  if (depth > 6) return "[deep]";
-  if (Array.isArray(value)) return value.map((v) => redact(v, depth + 1));
-  if (value && typeof value === "object") {
-    const out: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-      out[k] = SECRET_KEYS.test(k) && typeof v === "string" && v ? "<redacted>" : redact(v, depth + 1);
-    }
-    return out;
-  }
-  return value;
+  if (debugEnabled()) process.stderr.write(`[zju:debug] ${redactText(msg)}\n`);
 }

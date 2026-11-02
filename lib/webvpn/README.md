@@ -13,7 +13,7 @@
 4. 响应 JSON：`{error: "NEED_CONFIRM"}` → 再 POST `/do-confirm-login` 同表单；其他 `error` 为失败；无 error 即成功
 5. 有效标志：cookie `wengine_vpn_ticketwebvpn_zju_edu_cn`；`route` cookie 由服务端下发（Go 版写死的 `8768cab8…` 不再依赖）
 
-**账号体系**：WebVPN 用校园网账号密码，与统一认证不同，代码不做回退。错误有次数限制（提示"还剩 N 次机会"），代码不自动重试。凭据填在 `profile.env` 的 `webvpn_username` / `webvpn_password`。
+**账号体系**：WebVPN 用校园网账号密码，与统一认证不同，代码不做回退。错误有次数限制（提示"还剩 N 次机会"），代码不自动重试。凭据填在加密账号配置的 `webvpn_username` / `webvpn_password`。
 
 **默认传输**：`network=campus` 的模块统一经 WebVPN 访问（`transport=webvpn`），校内校外一致；只有 `transport=direct` 时直连。WebVPN 与 CAS 相互独立：zjuam 永远直连，只有校内站点的 URL（含 CAS 回跳）被重写。例外是模块在 `publicHosts` 里点名的主机（目前只有通知模块，取自 `lib/notice/hosts.json` 的校外实测）：经 WebVPN 时它们仍直连；直连不通，或者落到网站群的「无权访问」页 `/nopermit_zjusub.jsp`，这一次运行里这个主机改走 WebVPN。
 

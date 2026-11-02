@@ -1,10 +1,10 @@
 # 当前命令总表
 
-生成日期：2026-11-01。共 176 条公开命令路径、18 个模块。
+生成日期：2026-11-02。共 176 条公开命令路径、18 个模块。
 
 入口为 `node scripts/zju.ts <module> <command> [参数]`。默认帮助逐级展示；`--help --all` 展开当前范围全部公开命令。参数类型与帮助来自实际注册定义，本生成器不执行登录或业务。
 
-系统归属见 [架构](../dev/architecture.md)。未知参数、多余位置参数和错误类型会报错；业务对象的进一步校验由模块负责。
+未知参数、多余位置参数和错误类型会报错；业务对象的进一步校验由模块负责。
 
 | 模块 | 公开路径数 | 范围 |
 |---|---:|---|
@@ -34,10 +34,10 @@
 ### profile init
 
 ```text
-zju profile init [--zju-username VALUE] [--zju-password VALUE] [--webvpn-username VALUE] [--webvpn-password VALUE] [--pta-username VALUE] [--pta-password VALUE] [--transport webvpn|direct] 生成 profile.env 模板；已存在时只更新给出的项
+zju profile init [--system zju|webvpn|cc98|pta|chaoxing|mail|lab|tyys|buddy] [--index N] [--stdin] [--transport webvpn|direct] [--college VALUE] [--grade VALUE] [--student-level VALUE] [--major-name VALUE] [--major-code VALUE] 加密保存账号；--system 在终端输入账号和密码，--stdin 从标准输入接收 JSON
 ```
 
-`--zju-username`：文本/路径，允许空值清除配置；`--zju-password`：文本/路径，允许空值清除配置；`--webvpn-username`：文本/路径，允许空值清除配置；`--webvpn-password`：文本/路径，允许空值清除配置；`--pta-username`：文本/路径，允许空值清除配置；`--pta-password`：文本/路径，允许空值清除配置；`--transport`：webvpn / direct。
+`--system`：zju / webvpn / cc98 / pta / chaoxing / mail / lab / tyys / buddy；`--index`：整数，最小 1，最大 99；`--stdin`：开关；`--transport`：webvpn / direct；`--college`：文本/路径，允许空值清除配置；`--grade`：文本/路径，允许空值清除配置；`--student-level`：文本/路径，允许空值清除配置；`--major-name`：文本/路径，允许空值清除配置；`--major-code`：文本/路径，允许空值清除配置。
 
 ### profile show
 

@@ -1,6 +1,6 @@
 /**
  * 网络探测：直连校园网是否可达、WebVPN 是否可达、WebVPN 会话是否有效。
- * 不改变配置；transport 由用户在 profile.env 里决定（默认 webvpn）。
+ * 不改变配置；transport 由 profile init --transport 设置（默认 webvpn）。
  */
 import { HttpClient } from "../core/http.ts";
 import { WEBVPN_BASE, Webvpn } from "./client.ts";
@@ -60,7 +60,7 @@ export async function doctor(timeout = 5000): Promise<DoctorReport> {
   if (report.transport === "webvpn") {
     report.ok = report.webvpn.reachable && report.webvpn.credentials;
     if (!report.webvpn.reachable) report.advice.push("webvpn.zju.edu.cn 不可达，检查公网连接");
-    if (!report.webvpn.credentials) report.advice.push("profile.env 缺少 webvpn_username / webvpn_password");
+    if (!report.webvpn.credentials) report.advice.push("请运行 profile init --system webvpn 配置账号");
     if (report.webvpn.sessionValid === false) report.advice.push("WebVPN 会话未建立或已过期，运行 zju webvpn login");
   } else {
     report.ok = report.direct.campus;

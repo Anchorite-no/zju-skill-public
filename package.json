@@ -1,6 +1,6 @@
 {
   "name": "zju-skill",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "面向 AI agent 的浙大系统接口、可组合命令与可靠执行组件",
   "type": "module",
@@ -12,9 +12,12 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "zju": "node scripts/zju.ts"
+    "zju": "node scripts/zju.ts",
+    "security": "node scripts/check-security.mjs",
+    "prepack": "node scripts/check-package.mjs"
   },
   "dependencies": {
+    "@napi-rs/keyring": "2.1.2",
     "decimal.js": "10.6.0",
     "imapflow": "2.5.2",
     "mailparser": "3.14.1",
@@ -29,5 +32,18 @@
     "@types/pngjs": "6.0.5",
     "typescript": "^5.9.0"
   },
-  "license": "GPL-3.0-only"
+  "license": "GPL-3.0-only",
+  "files": [
+    "README.md",
+    "SKILL.md",
+    "SECURITY.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "profile.env.example",
+    "lib",
+    "scripts",
+    "references",
+    "flows",
+    "tsconfig.json"
+  ]
 }

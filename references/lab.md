@@ -26,7 +26,7 @@ lab
 
 课程、实验都写名称，不需要任何编号；查往期加 `--term 2025-2026春夏`。时间都是北京时间。
 
-- 账号：平台本地账号，默认同学号（`lab_username` 不填回退 `zju_username`）；密码在 `profile.env` 的 `lab_password`。
+- 账号：平台本地账号，默认同学号（`lab_username` 不填回退 `zju_username`）；用 `profile init --system lab` 配置密码。
 - **week 是实验序号，不是校历周**：平台把绪论课之后的每次实验依次编号，两周的实验写成 `5,6`。选课时取 `labs` 结果里 availableWeeks 的 week 原样填写；实际日期看 `timetable` 或 `selected` 的 dates。
 - limit 是这门课一共要选的实验个数（如 14）；`required: true` 的是必做实验。
 - `grades` 查每次实验的报告分（0–100），不是整门课程总评。`score: null` / `status: 未出分` 不代表没交报告，零分仍是已评分；学期没有记录会明确说明。

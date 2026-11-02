@@ -109,4 +109,6 @@ description: 浙江大学校园任务工具，查询课表、成绩、作业、�
 
 [教务](references/zdbk.md) · [通知](references/notice.md) · [二三四课堂](references/sztz.md) · [电子图书](references/ebook.md) · [选课](references/zdbk-selection.md)（多轮流程见 [选课工作流](flows/course-selection.md)） · [实验课](references/lab.md) · [学在](references/xuezai.md) · [体艺](references/tyys.md) · [PTA](references/pta.md) · [超星学习通](references/chaoxing.md) · [智云](references/zhiyun.md) · [CC98](references/cc98.md) · [查老师](references/chalaoshi.md) · [知网](references/cnki.md) · [邮箱](references/mail.md)
 
-提醒、定时和到点执行见 [定时任务](references/schedule.md)。修改本技能时遵循 [开发原则](AGENTS.md) 和 [框架](dev/framework.md)。
+提醒、定时和到点执行见 [定时任务](references/schedule.md)。
+
+账号缺失时请用户在终端运行 `node <SKILL>/scripts/zju.ts profile init --system 系统名`，密码输入不回显；不在聊天里索要密码，不编辑已加密的 `profile.env`。系统名为 zju、webvpn、cc98、pta、chaoxing、mail、lab、tyys 或 buddy。

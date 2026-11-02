@@ -1,0 +1,52 @@
+title = "ZJU public credential checks"
+
+[extend]
+useDefault = true
+
+# Reviewed public protocol constant; other credentials in this file still fail.
+[[allowlists]]
+description = "Public frontend constant in lib/cc98/auth.ts"
+condition = "AND"
+regexTarget = "secret"
+paths = ['^lib/cc98/auth\.ts$']
+regexes = ['^8b53f727\-08e2\-4509\-8857\-e34bf92b27f2$']
+
+# Reviewed public protocol constant; other credentials in this file still fail.
+[[allowlists]]
+description = "Public frontend constant in lib/cc98/README.md"
+condition = "AND"
+regexTarget = "secret"
+paths = ['^lib/cc98/README\.md$']
+regexes = ['^8b53f727\-08e2\-4509\-8857\-e34bf92b27f2$', '^client_id=9a1fd200\-8687\-44b1\-4c20\-08d50a96e5cd$', '^client_secret=8b53f727\-08e2\-4509\-8857\-e34bf92b27f2$']
+
+# Reviewed public protocol constant; other credentials in this file still fail.
+[[allowlists]]
+description = "Public frontend constant in lib/lab/README.md"
+condition = "AND"
+regexTarget = "secret"
+paths = ['^lib/lab/README\.md$']
+regexes = ['^eb8c68399de7483abb2d8abaea0d039f$']
+
+# Reviewed public protocol constant; other credentials in this file still fail.
+[[allowlists]]
+description = "Public frontend constant in lib/lab/index.ts"
+condition = "AND"
+regexTarget = "secret"
+paths = ['^lib/lab/index\.ts$']
+regexes = ['^eb8c68399de7483abb2d8abaea0d039f$']
+
+# Reviewed public protocol constant; other credentials in this file still fail.
+[[allowlists]]
+description = "Public frontend constant in lib/tyys/venue.ts"
+condition = "AND"
+regexTarget = "secret"
+paths = ['^lib/tyys/venue\.ts$']
+regexes = ['^8fceb735082b5a529312040b58ea780b$']
+
+# Reviewed public protocol constant; other credentials in this file still fail.
+[[allowlists]]
+description = "Public frontend constant in scripts/tyys/captcha.py"
+condition = "AND"
+regexTarget = "secret"
+paths = ['^scripts/tyys/captcha\.py$']
+regexes = ['^DEFAULT_CLICK_WORD_KEY$', '^XwKsGlMcdPMEhR1B$']

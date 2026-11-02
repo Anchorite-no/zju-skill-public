@@ -9,7 +9,7 @@ const visible = Object.entries(modules).filter(([, module]) => !module.hidden);
 const rows = visible.flatMap(([name, module]) => publicCommands(module.commands, name));
 const lines = ["# 当前命令总表", "", `生成日期：${new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Shanghai" }).format(new Date())}。共 ${rows.length} 条公开命令路径、${visible.length} 个模块。`, "",
   "入口为 `node scripts/zju.ts <module> <command> [参数]`。默认帮助逐级展示；`--help --all` 展开当前范围全部公开命令。参数类型与帮助来自实际注册定义，本生成器不执行登录或业务。", "",
-  "系统归属见 [架构](../dev/architecture.md)。未知参数、多余位置参数和错误类型会报错；业务对象的进一步校验由模块负责。", "",
+  "未知参数、多余位置参数和错误类型会报错；业务对象的进一步校验由模块负责。", "",
   "| 模块 | 公开路径数 | 范围 |", "|---|---:|---|",
   ...visible.map(([name, module]) => `| [${name}](#${name}) | ${publicCommands(module.commands, name).length} | ${module.description} |`), ""];
 for (const [name, module] of visible) {

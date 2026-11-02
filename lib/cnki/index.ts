@@ -251,7 +251,7 @@ export class Cnki {
       this.store.clear();
       if (!info) throw new BadResponse("知网 IP 登录接口返回异常", { status: res.status });
       throw new NeedsUser(`知网没有把当前出口认作学校的 IP：${info.ErrorMsg || info.Msg || "IP 登录失败"}`,
-        this.ctx.transport === "direct" ? "当前是直连（transport=direct），本机要在校园网内；不在校园网时把 profile.env 的 transport 改回 webvpn" : "经 WebVPN 仍失败时多半是学校的并发数已满，过一会儿再试");
+        this.ctx.transport === "direct" ? "当前是直连（transport=direct），本机要在校园网内；不在校园网时运行 profile init --transport webvpn" : "经 WebVPN 仍失败时多半是学校的并发数已满，过一会儿再试");
     }
     // Expire 是北京时间「2026-10-05 17:45:40」，登录后约 20 分钟。
     const expires = Date.parse(`${(info.Expire ?? "").replace(" ", "T")}+08:00`);

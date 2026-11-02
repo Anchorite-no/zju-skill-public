@@ -8,7 +8,7 @@ import { CookieJar, type HttpResponse } from "../core/http.ts";
 import { AuthExpired, BadResponse, NeedsUser, RateLimited, RemoteRejected } from "../core/errors.ts";
 import { log } from "../core/output.ts";
 import type { ModuleRequirements } from "../core/module.ts";
-import { chaoxingCredentials, profilePath, readProfile } from "../profile/profile.ts";
+import { chaoxingCredentials, readProfile } from "../profile/profile.ts";
 import { SessionStore } from "../zjuam/session.ts";
 import { openContext, type Context } from "../webvpn/transport.ts";
 
@@ -93,7 +93,7 @@ export class Chaoxing {
     });
     const data = res.json<{ status?: boolean; msg2?: string; mes?: string; containTwoFactorLogin?: boolean }>();
     if (!data || typeof data !== "object") throw new BadResponse(`超星登录返回非 JSON（HTTP ${res.status}）`, { status: res.status });
-    const hint = `检查 ${profilePath()} 里的 chaoxing_username / chaoxing_password；要求验证码或二次验证时先在浏览器里正常登录一次，不要反复尝试`;
+    const hint = `运行 profile init --system chaoxing 检查账号；要求验证码或二次验证时先在浏览器里正常登录一次，不要反复尝试`;
     if (data.containTwoFactorLogin) throw new NeedsUser("超星登录需要二次验证", hint);
     if (!data.status) throw new NeedsUser(`超星登录失败：${data.msg2 || data.mes || "平台没有给出原因"}`, hint);
     if (!this.uid) throw new BadResponse("超星登录成功但没有拿到会话 Cookie");

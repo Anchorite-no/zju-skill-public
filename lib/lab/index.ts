@@ -201,7 +201,7 @@ export function labSessionStatus(username: string) {
 function labCredentials(): { username: string; password: string } {
   const p = readProfile();
   const username = p.lab_username || credentials().username;
-  if (!p.lab_password) throw new ConfigError("缺少实验课平台密码", `在 profile.env 填 lab_username / lab_password（账号默认同学号 ${username}）`);
+  if (!p.lab_password) throw new ConfigError("缺少实验课平台密码", "请运行 profile init --system lab，账号留空使用学号");
   return { username, password: p.lab_password };
 }
 

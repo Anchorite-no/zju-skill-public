@@ -1,9 +1,9 @@
 /**
  * 使用者是谁：本科生还是研究生、哪个学院。通知的默认来源按它选：本人学院的官网，以及只面向本科生或研究生的来源。
  *
- * 类别：profile.env 的 student_level；没填时按学号首位（3 本科，2 硕士，1 博士）。
- * 学院：profile.env 的 college；没填时本科生从教务网的课表响应里读一次，记在 data/notice/identity.json（30 天）。
- *       研究生不在本科教务网里，要在 profile.env 填 college。大一未确认主修时教务网给的是求是学院、竺可桢学院，名录里没有。
+ * 类别：加密配置的 student_level；没填时按学号首位（3 本科，2 硕士，1 博士）。
+ * 学院：加密配置的 college；没填时本科生从教务网的课表响应里读一次，记在 data/notice/identity.json（30 天）。
+ *       研究生不在本科教务网里，要运行 profile init --college 配置学院。大一未确认主修时教务网给的是求是学院、竺可桢学院，名录里没有。
  * 学院官网名录：colleges.json，由 scripts/notice/colleges.ts 从学校主页的学院（系）名录生成。
  */
 import fs from "node:fs";
@@ -59,30 +59,30 @@ export function levelOf(): Level {
 const file = () => path.join(paths.data(), "notice", "identity.json");
 const KEEP_MS = 30 * 86_400_000;
 
-/** 不给 zdbk 时不联网，只看 profile.env 和本地记录 */
+/** 不给 zdbk 时不联网，只看加密配置和本地记录 */
 export async function identity(zdbk?: () => Promise<Zdbk>): Promise<Identity> {
   const p = readProfile(), username = p.zju_username ?? "", level = levelOf();
-  let name = p.college?.trim(), from = "profile.env 的 college";
+  let name = p.college?.trim(), from = "加密配置的 college";
   if (!name) {
     const saved = readJson<{ username?: string; college?: string; savedAt?: number }>(file());
     if (saved?.username === username && saved.college && Date.now() - (saved.savedAt ?? 0) < KEEP_MS) { name = saved.college; from = "教务网"; }
   }
   if (!name && level === "undergrad") {
-    if (!zdbk) return { level, hint: "还没有识别学院：第一次 notice list 或 notice new 时会从教务网读取，也可以在 profile.env 填 college" };
+    if (!zdbk) return { level, hint: "还没有识别学院：第一次 notice list 或 notice new 时会从教务网读取，也可以运行 profile init --college 配置学院" };
     try {
       name = (await studentInfo(await zdbk())).college.trim(); from = "教务网";
       if (name) writeJson(file(), { username, college: name, savedAt: Date.now() });
     } catch (err) {
-      return { level, hint: `没能从教务网读到你的学院（${err instanceof Error ? err.message : String(err)}），这次不含学院官网的通知；也可以在 profile.env 填 college` };
+      return { level, hint: `没能从教务网读到你的学院（${err instanceof Error ? err.message : String(err)}），这次不含学院官网的通知；也可以运行 profile init --college 配置学院` };
     }
   }
-  if (!name) return { level, hint: "不知道你的学院，这次不含学院官网的通知；在 profile.env 填 college（学院全称，如 计算机科学与技术学院）" };
+  if (!name) return { level, hint: "不知道你的学院，这次不含学院官网的通知；运行 profile init --college 配置学院（学院全称，如 计算机科学与技术学院）" };
   const found = findCollege(name);
   if (found.length === 1) return { level, college: found[0]! };
   const skipped = load().skipped.find((s) => norm(s.name) === norm(name));
-  return { level, hint: found.length > 1 ? `「${name}」对得上 ${found.map((c) => c.name).join("、")}，请在 profile.env 的 college 写全称`
+  return { level, hint: found.length > 1 ? `「${name}」对得上 ${found.map((c) => c.name).join("、")}，请用 profile init --college 填写全称`
     : skipped ? `${skipped.name}的官网还读不了，这次不含学院官网的通知`
-    : `学院名录里没有「${name}」（来自${from}），这次不含学院官网的通知；已确认主修的同学可在 profile.env 的 college 写专业所在学院的全称` };
+    : `学院名录里没有「${name}」（来自${from}），这次不含学院官网的通知；已确认主修的同学可用 profile init --college 填写专业所在学院的全称` };
 }
 
 /** 名录概况，给 notice sources 用 */

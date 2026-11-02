@@ -183,7 +183,7 @@ export class Webvpn {
       const msg = payload.message || payload.error;
       if (/captcha|验证码/i.test(msg)) throw new NeedsUser(`WebVPN 需要验证码：${msg}`, "请在浏览器登录 webvpn.zju.edu.cn 一次后再重试，或用 zju webvpn import-cookie 导入 cookie");
       // 密码错误有次数限制（服务端提示"还剩 N 次机会"），绝不自动重试
-      throw new NeedsUser(`WebVPN 登录失败：${msg}`, "WebVPN 是校园网账号，与统一认证不同。检查 profile.env 里的 webvpn_username / webvpn_password；连续错误会锁定账号，请勿反复尝试");
+      throw new NeedsUser(`WebVPN 登录失败：${msg}`, "WebVPN 是校园网账号，与统一认证不同。用 profile init --system webvpn 检查账号；连续错误会锁定账号，请勿反复尝试");
     }
     if (res.status !== 200 && !res.isRedirect) throw new TransportError(`WebVPN do-login HTTP ${res.status}`);
     if (!this.hasTicket) throw new BadResponse("WebVPN 登录后未获得 ticket cookie");

@@ -1,6 +1,6 @@
 # PTA
 
-PTA 使用百腾独立账号，公网直连，不依赖校园网、WebVPN 或 CAS。账号填写 `profile.env` 的 `pta_username`（邮箱）和 `pta_password`；环境变量 `PTA_USERNAME` / `PTA_PASSWORD` 可以覆盖。`profile show` 只显示密码是否已填。
+PTA 使用百腾独立账号，公网直连，不依赖校园网、WebVPN 或 CAS。用 `profile init --system pta` 配置账号邮箱和密码；环境变量 `PTA_USERNAME` / `PTA_PASSWORD` 可以覆盖。`profile show` 只显示密码是否已填。
 
 ## 命令
 

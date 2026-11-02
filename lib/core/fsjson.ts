@@ -3,6 +3,8 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { randomUUID } from "node:crypto";
+import { atomicRename } from "./atomic-rename.mjs";
 
 export function readJson<T = unknown>(file: string): T | undefined {
   let text: string;
@@ -22,20 +24,20 @@ export function readJson<T = unknown>(file: string): T | undefined {
 
 export function writeJson(file: string, value: unknown): void {
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  const tmp = `${file}.${process.pid}.${Date.now()}.tmp`;
+  const tmp = `${file}.${randomUUID()}.tmp`;
   const text = JSON.stringify(value, null, 2) + "\n";
-  const fd = fs.openSync(tmp, "w", 0o600);
   try {
-    fs.writeFileSync(fd, text, "utf8");
+    const fd = fs.openSync(tmp, "wx", 0o600);
     try {
+      fs.writeFileSync(fd, text, "utf8");
       fs.fsyncSync(fd);
-    } catch {
-      /* 某些文件系统不支持 */
+    } finally {
+      fs.closeSync(fd);
     }
+    atomicRename(tmp, file);
   } finally {
-    fs.closeSync(fd);
+    if (fs.existsSync(tmp)) fs.unlinkSync(tmp);
   }
-  fs.renameSync(tmp, file);
 }
 
 export function removeFile(file: string): boolean {

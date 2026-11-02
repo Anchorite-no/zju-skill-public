@@ -129,7 +129,7 @@ export class Cc98Auth {
     if (res.status !== 200 || !payload.access_token) {
       const desc = payload.error_description || payload.error || `HTTP ${res.status}`;
       if (fields["grant_type"] === "password" && /invalid_grant|invalid_username_or_password/i.test(desc)) {
-        throw new NeedsUser(`CC98 登录失败：${desc}`, "检查 profile.env 里的 cc98_username / cc98_password；不要反复尝试");
+        throw new NeedsUser(`CC98 登录失败：${desc}`, "用 profile init --system cc98 检查账号；不要反复尝试");
       }
       throw new BadResponse(`CC98 token 获取失败：${desc}`, { status: res.status, grant: fields["grant_type"] });
     }

@@ -10,7 +10,7 @@
 - 官方使用指南：<https://its.zju.edu.cn/2026/0528/c91768a3167649/page.htm>。同时列出非 SSL 端口 143 / 25 / 110 和 POP3 995，这里只用加密的 993 / 994。
 - 客户端专用密码：<https://mail.zju.edu.cn/coremail/help/2fa_zh_CN.html>。开了二次验证以后，客户端必须用它，收信和发信服务器都用同一个。网页版「设置 → 安全设置 → 客户端专用密码 → 生成专用密码」，随机 16 位、区分大小写、只显示一次；密码名称不是密码。
 - 登录用户名是完整邮箱地址：<https://mail.zju.edu.cn/coremail/help/clientoption_zh_CN.jsp>。
-- 凭据在 `profile.env` 的 `mail_username` / `mail_password`；不是 `@zju.edu.cn` 的地址在连接之前拒绝。
+- 凭据在加密账号配置的 `mail_username` / `mail_password`；不是 `@zju.edu.cn` 的地址在连接之前拒绝。
 
 ## 收信
 

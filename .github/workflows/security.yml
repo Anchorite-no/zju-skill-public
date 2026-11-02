@@ -1,0 +1,84 @@
+name: Credential safety
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  repository:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24.19.0
+      - name: Install verified Gitleaks
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz -o "$RUNNER_TEMP/gitleaks.tar.gz"
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  $RUNNER_TEMP/gitleaks.tar.gz" | sha256sum --check
+          mkdir -p "$RUNNER_TEMP/gitleaks-bin"
+          tar -xzf "$RUNNER_TEMP/gitleaks.tar.gz" -C "$RUNNER_TEMP/gitleaks-bin" gitleaks
+          echo "$RUNNER_TEMP/gitleaks-bin" >> "$GITHUB_PATH"
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run security
+      - run: npm pack --dry-run
+  keyring:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-15, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24.19.0
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Create isolated macOS keychain
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          keychain="$RUNNER_TEMP/zju-skill-test.keychain-db"
+          password=$(openssl rand -base64 32)
+          security create-keychain -p "$password" "$keychain"
+          security set-keychain-settings -lut 21600 "$keychain"
+          security unlock-keychain -p "$password" "$keychain"
+          security default-keychain -d user -s "$keychain"
+      - name: Verify migration and decryption across processes
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import os from 'node:os';
+          import path from 'node:path';
+          import { spawnSync } from 'node:child_process';
+          import { credentialVault } from './lib/core/credential-vault.mjs';
+          import { readProfileFile } from './lib/core/profile-file.mjs';
+          import { parseEnv } from './lib/core/env.ts';
+          const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'zju-skill-keyring-'));
+          const file = path.join(dir, 'profile.env');
+          let sealed;
+          try {
+            fs.writeFileSync(file, 'zju_username=3251234567\nzju_password=ci-fixture-only\n');
+            const result = readProfileFile(file, { parseLegacy: parseEnv });
+            sealed = JSON.parse(result.raw).sealed;
+            assert.equal(result.values.zju_password, 'ci-fixture-only');
+            assert.ok(!result.raw.includes('ci-fixture-only'));
+            const code = "import { credentials } from './lib/profile/profile.ts'; if (credentials().password !== 'ci-fixture-only') process.exit(2)";
+            const child = spawnSync(process.execPath, ['--input-type=module', '-e', code], { env: { ...process.env, ZJU_PROFILE: file }, encoding: 'utf8', windowsHide: true });
+            assert.equal(child.status, 0, child.stderr);
+          } finally {
+            if (sealed) credentialVault.forget(sealed);
+            assert.equal(path.dirname(dir), os.tmpdir());
+            fs.rmSync(dir, { recursive: true });
+          }
+          NODE
+      - name: Remove isolated macOS keychain
+        if: always() && runner.os == 'macOS'
+        shell: bash
+        run: security delete-keychain "$RUNNER_TEMP/zju-skill-test.keychain-db"

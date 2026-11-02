@@ -54,5 +54,5 @@ export const webvpnCommands: Record<string, Command> = sessionCommands({
 // 旧入口只提示新路径。
 for (const [old, now] of Object.entries({
   doctor: "webvpn check", "clear-cache": "webvpn check --fresh", encode: "webvpn url encode", rewrite: "webvpn url encode", decode: "webvpn url decode", unwrap: "webvpn url decode",
-  requirements: "dev/architecture.md；各模块声明见 lib/<module>/module.json",
+  requirements: "各模块声明见 lib/<module>/module.json",
 })) webvpnCommands[old] = retired(now);
